@@ -1,6 +1,6 @@
 (ns hell
-  (:require [io.pedastal.http :as http]
-            [io.pedastal.http.route :as route]))
+  (:require [io.pedestal.http :as http]
+            [io.pedestal.http.route :as route]))
 
 
 (defn respond-hello [request]
