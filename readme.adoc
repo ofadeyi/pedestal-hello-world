@@ -1,0 +1,5 @@
+= Pedastal - Hello World Tutorial
+
+== Introduction
+
+Code from following the __Pedestal__ link:http://pedestal.io/guides/hello-world[**Hello World**] tutorial
