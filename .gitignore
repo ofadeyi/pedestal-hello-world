@@ -11,3 +11,5 @@ pom.xml.asc
 .hg/
 .idea
 /.nrepl-history
+*.iml
+project.clj
