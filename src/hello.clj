@@ -5,15 +5,22 @@
 (defn ok [body]
   {:status 200 :body body})
 
-(defn greeting-for [query-name]
-  (if (empty? query-name)
-    "Hello, world!\n"
-    (str "Hello, " query-name "!\n")))
+(defn bad-request []
+  {:status 400})
+
+(defn greeting-for [has-query-name query-name]
+  (cond
+    (= has-query-name false) "Hello, world!\n"
+    (= (.length query-name) 0) nil
+    :else (str "Hello, " query-name "!\n")))
 
 (defn respond-hello [request]
-  (let [qname (get-in request [:query-params :name])
-        rresponse (greeting-for qname)]
-     (ok rresponse)))
+  (let [has-qname (contains? (:query-params request) :name)
+        qname (get-in request [:query-params :name])
+        rresponse (greeting-for has-qname qname)]
+    (if rresponse
+      (ok rresponse)
+      (bad-request))))
 
 (def routes
   (route/expand-routes
