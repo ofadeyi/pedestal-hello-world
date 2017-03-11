@@ -1,6 +1,7 @@
 (ns hello
   (:require [io.pedestal.http :as http]
-            [io.pedestal.http.route :as route]))
+            [io.pedestal.http.route :as route]
+            [clojure.string :as st]))
 
 (def unmentionables #{"YHWH" "Voldemort" "Mxyzptlk" "Rumplestiltskin" "曹操"})
 
@@ -13,9 +14,15 @@
 (defn not-found []
   {:status 404 :body "Not Found\n"})
 
-(defn greeting-for [ query-name]
+(defn check-unmentionables [query-name]
+  (if (empty? query-name)
+    nil
+    (seq (filter #(= (st/lower-case query-name) %)
+         (map #(st/lower-case %) unmentionables)))))
+
+(defn greeting-for [query-name]
   (cond
-    (unmentionables query-name) nil
+    (check-unmentionables query-name) nil
     (empty? query-name)         "Hello, world!\n"
     :else                       (str "Hello, " query-name "!\n")))
 
